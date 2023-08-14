@@ -1,0 +1,291 @@
+
+
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+const int tamanoArreglo = 10;
+
+void algoritmoSeleccion(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        if (minIndex != i) {
+            swap(arr[i], arr[minIndex]);
+        }
+    }
+}
+
+void algoritmoInsercion(string arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        string key = arr[i];
+        int j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        arr[j + 1] = key;
+    }
+}
+
+void algoritmoBurbuja(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+}
+
+void busquedaLineal(int arr[], int n, int target) {
+    bool encontrado = false;
+    int indice = -1;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == target) {
+            encontrado = true;
+            indice = i;
+            break;
+        }
+    }
+
+    if (encontrado) {
+        cout << "Elemento " << target << " encontrado en el indice " << indice << "." << endl;
+    }
+    else {
+        cout << "Elemento " << target << " no encontrado en el arreglo." << endl;
+    }
+}
+
+int busquedaBinaria(int arr[], int n, int target) {
+    int inicio = 0;
+    int fin = n - 1;
+
+    while (inicio <= fin) {
+        int medio = inicio + (fin - inicio) / 2;
+
+        if (arr[medio] == target) {
+            return medio;
+        }
+        else if (arr[medio] < target) {
+            inicio = medio + 1;
+        }
+        else {
+            fin = medio - 1;
+        }
+    }
+
+    return -1;
+}
+
+template <typename T>
+int contarOcurrencias(T arr[], int n, T target) {
+    int contador = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == target) {
+            contador++;
+        }
+    }
+    return contador;
+}
+
+int main() {
+    int opcionPrincipal;
+    int arregloNumerico[tamanoArreglo];
+    string arregloCadenas[tamanoArreglo];
+
+    while (true) {
+        cout << "  MENU PRINCIPAL " << endl;
+        cout << "1. Algoritmos de ordenamiento" << endl;
+        cout << "2. Algoritmos de busqueda" << endl;
+        cout << "3. Salir" << endl;
+        cout << "Selecciona una opcion: ";
+        cin >> opcionPrincipal;
+
+        switch (opcionPrincipal) {
+        case 1: {
+            int opcionOrdenamiento;
+            cout << "  ALGORITMOS DE ORDENAMIENTO:" << endl;
+            cout << "1. Implementar un algoritmo de seleccion" << endl;
+            cout << "2. Utilizar el algoritmo de insercion" << endl;
+            cout << "3. Algoritmo de ordenamiento basado en burbuja" << endl;
+            cout << "Selecciona una opcion: ";
+            cin >> opcionOrdenamiento;
+
+            switch (opcionOrdenamiento) {
+            case 1:
+                cout << "Ingresa " << tamanoArreglo << " numeros para llenar el arreglo:" << endl;
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << "Elemento " << i + 1 << ": ";
+                    cin >> arregloNumerico[i];
+                }
+
+                algoritmoSeleccion(arregloNumerico, tamanoArreglo);
+
+                cout << "Arreglo ordenado: ";
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << arregloNumerico[i] << " ";
+                }
+                cout << endl;
+                break;
+
+            case 2:
+                cout << "Ingresa " << tamanoArreglo << " cadenas para llenar el arreglo:" << endl;
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << "Cadena " << i + 1 << ": ";
+                    cin >> arregloCadenas[i];
+                }
+
+                algoritmoInsercion(arregloCadenas, tamanoArreglo);
+
+                cout << "Arreglo ordenado ascendete o alfabeticamente: ";
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << arregloCadenas[i] << " ";
+                }
+                cout << endl;
+
+                break;
+
+            case 3:
+                cout << "Ingresa " << tamanoArreglo << " numeros para llenar el arreglo:" << endl;
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << "Numero " << i + 1 << ": ";
+                    cin >> arregloNumerico[i];
+                }
+
+                algoritmoBurbuja(arregloNumerico, tamanoArreglo);
+
+                cout << "Arreglo ordenado por burbuja: ";
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << arregloNumerico[i] << " ";
+                }
+                cout << endl;
+                break;
+
+            default:
+                cout << "Opcion de ordenamiento invalida." << endl;
+            }
+            break;
+        }
+
+        case 2: {
+            int opcionBusqueda;
+            cout << "  ALGORITMOS DE BUSQUEDA " << endl;
+            cout << "1. Implementar una busqueda lineal" << endl;
+            cout << "2. Utilizar la busqueda binaria" << endl;
+            cout << "3.  Algoritmo de busqueda con contador" << endl;
+            cout << "Selecciona una opcion: ";
+            cin >> opcionBusqueda;
+
+            switch (opcionBusqueda) {
+            case 1:
+                cout << "Ingresa " << tamanoArreglo << " numeros para llenar el arreglo:" << endl;
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << "Numero " << i + 1 << ": ";
+                    cin >> arregloNumerico[i];
+                }
+
+                int elementoBuscar;
+                cout << "Ingresa el numero que deseas buscar: ";
+                cin >> elementoBuscar;
+
+                busquedaLineal(arregloNumerico, tamanoArreglo, elementoBuscar);
+                break;
+
+            case 2:
+                cout << "Ingresa " << tamanoArreglo << " numeros ordenados para llenar el arreglo:" << endl;
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << "Numero " << i + 1 << ": ";
+                    cin >> arregloNumerico[i];
+                }
+
+                int elementoBuscarBinaria;
+                cout << "Ingresa el numero que deseas buscar: ";
+                cin >> elementoBuscarBinaria;
+
+                int indiceEncontrado; // Agregar esta línea para declarar la variable
+                indiceEncontrado = busquedaBinaria(arregloNumerico, tamanoArreglo, elementoBuscarBinaria);
+
+                if (indiceEncontrado != -1) {
+                    cout << "Elemento " << elementoBuscarBinaria << " encontrado en el indice " << indiceEncontrado << "." << endl;
+                }
+                else {
+                    cout << "Elemento " << elementoBuscarBinaria << " no encontrado en el arreglo." << endl;
+                }
+
+
+                break;
+
+            case 3:
+                cout << "Ingresa " << tamanoArreglo << " numeros para llenar el arreglo numerico:" << endl;
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << "Numero " << i + 1 << ": ";
+                    cin >> arregloNumerico[i];
+                }
+
+                cout << "Ingresa " << tamanoArreglo << " cadenas para llenar el arreglo de cadenas:" << endl;
+                for (int i = 0; i < tamanoArreglo; i++) {
+                    cout << "Cadena " << i + 1 << ": ";
+                    cin >> arregloCadenas[i];
+                }
+
+                int opcionContador;
+                cout << " MENU DE OCURRENCIAS " << endl;
+                cout << "1. Buscar ocurrencias en el arreglo numerico" << endl;
+                cout << "2. Buscar ocurrencias en el arreglo de cadenas" << endl;
+                cout << "Selecciona una opcion: ";
+                cin >> opcionContador;
+
+                switch (opcionContador) {
+                case 1: {
+                    int elementoNumerico;
+                    cout << "Ingresa el numero que deseas buscar en el arreglo numerico: ";
+                    cin >> elementoNumerico;
+                    int ocurrenciasNumericas = contarOcurrencias(arregloNumerico, tamanoArreglo, elementoNumerico);
+                    cout << "El numero " << elementoNumerico << " aparece " << ocurrenciasNumericas << " veces en el arreglo numerico." << endl;
+                    break;
+                }
+                case 2: {
+                    string elementoCadena;
+                    cout << "Ingresa la cadena que deseas buscar en el arreglo de cadenas: ";
+                    cin >> elementoCadena;
+                    int ocurrenciasCadenas = contarOcurrencias(arregloCadenas, tamanoArreglo, elementoCadena);
+                    cout << "La cadena '" << elementoCadena << "' aparece " << ocurrenciasCadenas << " veces en el arreglo de cadenas." << endl;
+                    break;
+                }
+                default:
+                    cout << "Opción invalida." << endl;
+                    break;
+                }
+
+                break;
+
+            
+                cout << "Opcion de busqueda invalida." << endl;
+            }
+            break;
+        }
+
+        case 3:
+            cout << "Saliendo del programa..." << endl;
+            return 0;
+
+        default:
+            cout << "Opcion principal invalida. " << endl;
+        }
+    }
+
+    return 0;
+}
+
